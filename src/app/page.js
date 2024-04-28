@@ -1,95 +1,118 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// page.js
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+'use client'
+import React, { useState } from 'react';
+import NoteList from './components/NoteList';
+import Link from 'next/link';
+import 'bootstrap/dist/css/bootstrap.min.css';
+const IndexPage = () => {
+	const [notes, setNotes] = useState([
+		{
+			id: 1, title: 'meeting',
+			description: 'Review project, assign task',
+			important: true
+		},
+		{
+			id: 2, title: 'Grocery',
+			description: 'Milk, Sugar, Apples, eggs',
+			important: false
+		},
+    {
+			id: 3, title: 'meeting2',
+			description: 'important meeting with my supervisor at 2 pm',
+			important: false
+		},
+    {
+			id: 4, title: 'shopping',
+			description: 'buy all the important stuff on sturday',
+			important: false
+		},
+    {
+			id: 5, title: 'urgent call',
+			description: 'call my mum today at 8 am',
+			important: false
+		},
+    {
+			id: 6, title: 'to memorize',
+			description: 'read thlink that i saved on computer',
+			important: true
+		},
+    {
+			id: 7, title: 'friends',
+			description: 'I have a party with my friends at night, friday',
+			important: false
+		},
+	]);
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+	const deleteNote = (id) => {
+		setNotes(notes.filter((note) => note.id !== id));
+	};
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+	return (
+		<div style={{backgroundColor:'#f399b9'}} className="container col-md-9 mb-3 mt-5 bg-dark-pink border border-dark">
+			<div className="col text-center">
+				<h2 style={{ marginBottom: '50px', fontWeight: 'bold' }} className='text-success mt-5'>
+        Note Taking App
+				</h2>
+        {/* <Link href={`/edit/${id}`}>
+  <a className="btn text-primary">
+    <FaEdit style={{ fontSize: '1rem' }} />
+  </a>
+</Link> */}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+			</div>
+			<NoteList notes={notes}
+				setNotes={setNotes} onDelete={deleteNote} />
+		</div>
+	);
+};
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
-}
+export default IndexPage;
+// 'use client'
+
+// // pages/index.js
+
+// import React, { useState } from 'react';
+// import NoteList from './components/NoteList';
+// import Link from 'next/link';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+// const IndexPage = () => {
+//  const [notes, setNotes] = useState([
+//   {
+//     id: 1, title: 'meeting',
+//     description: 'Review project, assign task',
+//     important: false
+// },
+// {
+//     id: 2, title: 'Grocery',
+//     description: 'Milk, Sugar, Apples, eggs',
+//     important: false
+// },
+//  ]);
+
+//  const deleteNote = (id) => {
+//     setNotes(notes.filter((note) => note.id !== id));
+//  };
+
+//  const addNote = (newNote) => {
+//     setNotes([...notes, newNote]);
+//  };
+
+//  const updateNote = (updatedNote) => {
+//     setNotes(notes.map((note) => (note.id === updatedNote.id ? updatedNote : note)));
+//  };
+
+//  return (
+//     <div className="container">
+//       <h2>Note List</h2>
+//       <Link href="/add">
+//         <a className="btn btn-primary">Add Note</a>
+//       </Link>
+//       <NoteList notes={notes} onDelete={deleteNote} />
+//     </div>
+//  );
+// };
+
+// export default IndexPage;
